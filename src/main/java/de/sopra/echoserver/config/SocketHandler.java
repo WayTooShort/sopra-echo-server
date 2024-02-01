@@ -1,8 +1,7 @@
-package jens.echoserver.config;
+package de.sopra.echoserver.config;
 
 import com.google.gson.Gson;
-import jens.echoserver.entities.ChatMessage;
-import jens.echoserver.entities.MessageType;
+import de.sopra.echoserver.entities.ChatMessage;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -10,7 +9,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component

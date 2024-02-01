@@ -1,4 +1,4 @@
-package jens.echoserver.entities;
+package de.sopra.echoserver.entities;
 
  public enum MessageType {
     CHAT,
