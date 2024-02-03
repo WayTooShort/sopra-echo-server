@@ -2,6 +2,7 @@ package de.sopra.echoserver.config;
 
 import com.google.gson.Gson;
 import de.sopra.echoserver.entities.ChatMessage;
+import de.sopra.echoserver.entities.MessageMessage;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -21,14 +22,24 @@ public class SocketHandler extends TextWebSocketHandler {
 
         if(!session.isOpen()) return;
 
-        ChatMessage message = new Gson().fromJson(rawMessage.getPayload(), ChatMessage.class);
+//        try {
+//            MessageMessage message = new Gson().fromJson(rawMessage.getPayload(), MessageMessage.class);
+//
+//            session.sendMessage(rawMessage);
+//        } catch () {
+//            session.sendMessage();
+//        }
 
-        switch (message.type) {
-            case CHAT -> broadcastMessage(message); //session.sendMessage(new TextMessage(new Gson().toJson(message)));
-            case JOIN -> broadcastMessage(message);
-            case LEAVE -> broadcastMessage(message);
-            default -> throw new IOException("Message Type unknown");
-        }
+//        ChatMessage message = new Gson().fromJson(rawMessage.getPayload(), ChatMessage.class);
+        System.out.println(rawMessage);
+        session.sendMessage(rawMessage);
+
+//        switch (message.type) {
+//            case CHAT -> broadcastMessage(message); //session.sendMessage(new TextMessage(new Gson().toJson(message)));
+//            case JOIN -> broadcastMessage(message);
+//            case LEAVE -> broadcastMessage(message);
+//            default -> throw new IOException("Message Type unknown");
+//        }
     }
 
     public void broadcastMessage(ChatMessage message) throws IOException {
