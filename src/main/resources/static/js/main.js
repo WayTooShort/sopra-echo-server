@@ -48,7 +48,7 @@ function onConnected() {
         type: 'JOIN'
     };
 
-    ws.send(JSON.stringify(joinMessage));
+    // ws.send(JSON.stringify(joinMessage));
 }
 
 
@@ -64,7 +64,7 @@ function onClose() {
         type: 'LEAVE'
     };
 
-    ws.send(JSON.stringify(leaveMessage));
+    // ws.send(JSON.stringify(leaveMessage));
 
     while(messageArea.firstChild != null) {
         messageArea.removeChild(messageArea.lastChild)
@@ -84,7 +84,9 @@ function sendMessage(event) {
             type: 'CHAT'
         };
         // console.log(JSON.stringify(chatMessage));
-        ws.send(JSON.stringify(chatMessage));
+        // console.log(JSON.stringify(messageContent))
+        // console.log("mc " + messageContent)
+        ws.send(messageContent);
         messageInput.value = '';
     }
 
@@ -96,30 +98,44 @@ function onMessageReceived(payload) {
     let message = JSON.parse(payload.data);
     let messageElement = document.createElement('li');
 
-    if(message.type === 'JOIN') {
-        messageElement.classList.add('event-message');
-        message.content = message.sender + ' joined!';
-    } else if (message.type === 'LEAVE') {
-        messageElement.classList.add('event-message');
-        message.content = message.sender + ' left!';
-    } else {
+    // if(message.type === 'JOIN') {
+    //     messageElement.classList.add('event-message');
+    //     message.content = message.sender + ' joined!';
+    // } else if (message.type === 'LEAVE') {
+    //     messageElement.classList.add('event-message');
+    //     message.content = message.sender + ' left!';
+    // } else {
+    //     messageElement.classList.add('chat-message');
+    //
+    //     let avatarElement = document.createElement('i');
+    //     let avatarText = document.createTextNode(message.sender[0]);
+    //     avatarElement.appendChild(avatarText);
+    //     avatarElement.style['background-color'] = getAvatarColor(message.sender);
+    //
+    //     messageElement.appendChild(avatarElement);
+    //
+    //     let usernameElement = document.createElement('span');
+    //     let usernameText = document.createTextNode(message.sender);
+    //     usernameElement.appendChild(usernameText);
+    //     messageElement.appendChild(usernameElement);
+    // }
+
         messageElement.classList.add('chat-message');
 
         let avatarElement = document.createElement('i');
-        let avatarText = document.createTextNode(message.sender[0]);
+        let avatarText = document.createTextNode("server");
         avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.sender);
+        avatarElement.style['background-color'] = getAvatarColor("server"[0]);
 
         messageElement.appendChild(avatarElement);
 
         let usernameElement = document.createElement('span');
-        let usernameText = document.createTextNode(message.sender);
+        let usernameText = document.createTextNode("server");
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
-    }
 
     let textElement = document.createElement('p');
-    let messageText = document.createTextNode(message.content);
+    let messageText = document.createTextNode(JSON.stringify(message));
     textElement.appendChild(messageText);
 
     messageElement.appendChild(textElement);
